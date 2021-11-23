@@ -50,9 +50,9 @@ EOF
         echo "Entrypoint: Setting up Icinga Web 2 module Director kickstart."
         cat <<EOF > /etc/icingaweb2/modules/director/kickstart.ini
 [config]
-endpoint = "$ICINGA2_API_HOST"
-; host = 127.0.0.1
-; port = 5665
+endpoint = "$ICINGA2_MASTER_CN"
+host = "$ICINGA2_API_HOST"
+port = $ICINGA2_API_PORT
 username = "$ICINGA2_API_USER"
 password = "$ICINGA2_API_PASSWORD"
 EOF
