@@ -223,6 +223,7 @@ Variables marked in **bold** are recommended to be adjusted according to your ne
 | `ICINGA2_MYSQL_DB`                              | icinga2              | Database name of the Icinga 2 database.                |
 | `ICINGA2_MYSQL_USER`                            | icinga2              | Username of the Icinga 2 database.                     |
 | **`ICINGA2_MYSQL_PASSWORD`**                    | 2agnici              | Password of the Icinga 2 database.                     |
+| `ICINGA2_MASTER_CN`                             | ${ICINGA2_CN}        | The value is set from icinga-icinga2 container.        |
 | `ICINGA2_API_HOST`                              | icinga-icinga2       | Hostname or IP address of the Icinga 2 API.            |
 | `ICINGA2_API_PORT`                              | 5665                 | Port of the Icinga 2 API.                              |
 | `ICINGA2_API_USER`                              | icingaweb2           | Username of the Icinga 2 API.                          |
