@@ -9,7 +9,7 @@ VOLUME /etc/icingaweb2
 RUN export DEBIAN_FRONTEND=noninteractive \
     && apt-get update \
     && apt-get -y upgrade \
-    && apt-get -y install apt-transport-https curl wget gnupg \
+    && apt-get -y install apt-transport-https curl wget gnupg git \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
