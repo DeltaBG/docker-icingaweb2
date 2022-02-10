@@ -202,6 +202,10 @@ docker run -d \
   graphiteapp/graphite-statsd
 ```
 
+### x509 module
+
+The x509 (certificate module) can be installed by setting the environment variable `ICINGAWEB2_MODULE_X509` to `true`. It is advisable to configure the `ICINGAWEB2_MODULE_X509_MYSQL_PASSWORD` variable as well. 
+
 ## Reference
 
 ### Environment variables
@@ -243,6 +247,10 @@ Variables marked in **bold** are recommended to be adjusted according to your ne
 | **`ICINGAWEB2_MODULE_DIRECTOR_MYSQL_PASSWORD`** | rotcerid_2bewagnici  | Password for the Director database.                    |
 | `ICINGAWEB2_MODULE_GRAPHITE`                    | false                | Enable or disable Graphite module.                     |
 | `ICINGAWEB2_MODULE_GRAPHITE_HOST`               | icinga-graphite      | Hostname or IP address of the Carbon/Graphite.         |
+| `ICINGAWEB2_MODULE_X509`                        | false                | Enable/disable the x509 module                         |
+| `ICINGAWEB2_MODULE_X509_MYSQL_DB`               | x509                 | MySQL database name for x509 module                    |
+| `ICINGAWEB2_MODULE_X509_MYSQL_USER`             | x509                 | MySQL database user name for x509 module               |
+| `ICINGAWEB2_MODULE_X509_MYSQL_PASSWORD`         | s3cr3tpass           | MySQL database password for x509 module                |
 
 ### Volumes
 
