@@ -84,3 +84,4 @@ password = "$ICINGAWEB2_MODULE_X509_MYSQL_PASSWORD"
 charset = "utf8"
 use_ssl = "0"
 EOF
+fi
