@@ -9,7 +9,7 @@ VOLUME /etc/icingaweb2
 RUN export DEBIAN_FRONTEND=noninteractive \
     && apt-get update \
     && apt-get -y upgrade \
-    && apt-get -y install apt-transport-https curl wget gnupg \
+    && apt-get -y install apt-transport-https curl wget gnupg git \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -43,6 +43,7 @@ RUN mkdir -p /usr/local/share/icingaweb2/modules \
     && mkdir -p /usr/local/share/icingaweb2/modules/incubator \
     && wget -q --no-cookies -O - "https://github.com/Icinga/icingaweb2-module-incubator/archive/v0.6.0.tar.gz" \
     | tar xz --strip-components=1 --directory=/usr/local/share/icingaweb2/modules/incubator -f - \
+    && git clone https://github.com/Icinga/icingaweb2-module-x509.git /usr/local/share/icingaweb2/modules/x509 \
     && true
 
 ADD content/ /

@@ -64,3 +64,24 @@ EOF
     fi
 
 fi
+
+# If Icinga Web 2 module x509 (certificate monitoring) is enabled
+if $ICINGAWEB2_MODULE_X509; then
+
+    # Enable the x509 module
+    icingacli module enable x509
+
+    # Setup x509 resources.ini
+    cat <<EOF >> /etc/icingaweb2/resources.ini
+[x509_db]
+type = "db"
+db = "mysql"
+host = "$ICINGAWEB2_MYSQL_HOST"
+port = "$ICINGAWEB2_MYSQL_PORT"
+dbname = "$ICINGAWEB2_MODULE_X509_MYSQL_DB"
+username = "$ICINGAWEB2_MODULE_X509_MYSQL_USER"
+password = "$ICINGAWEB2_MODULE_X509_MYSQL_PASSWORD"
+charset = "utf8"
+use_ssl = "0"
+EOF
+fi
