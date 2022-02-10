@@ -67,13 +67,6 @@ fi
 
 # If Icinga Web 2 module x509 (certificate monitoring) is enabled
 if $ICINGAWEB2_MODULE_X509; then
-    
-    # Import the x509 initial schema
-    mysql -h$ICINGAWEB2_MYSQL_HOST \
-    -P$ICINGAWEB2_MYSQL_PORT \
-    -u$MYSQL_ROOT_USER \
-    -p$MYSQL_ROOT_PASSWORD \
-    $ICINGAWEB2_MODULE_X509_MYSQL_DB < /usr/local/share/icingaweb2/modules/x509/etc/schema/mysql.schema.sql
 
     # Enable the x509 module
     icingacli module enable x509
