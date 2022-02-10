@@ -88,6 +88,6 @@ EOF
     # Setup x509 config.ini
     cat <<EOF > /etc/icingaweb2/modules/x509/config.ini
 [backend]
-resource = "$ICINGAWEB2_MODULE_X509_MYSQL_DB\_db"
+resource = "x509_db"
 EOF
 fi
