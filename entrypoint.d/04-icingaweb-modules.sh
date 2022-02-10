@@ -84,10 +84,3 @@ password = "$ICINGAWEB2_MODULE_X509_MYSQL_PASSWORD"
 charset = "utf8"
 use_ssl = "0"
 EOF
-    
-    # Setup x509 config.ini
-    cat <<EOF > /etc/icingaweb2/modules/x509/config.ini
-[backend]
-resource = "x509_db"
-EOF
-fi
