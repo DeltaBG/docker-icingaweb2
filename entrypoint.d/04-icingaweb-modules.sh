@@ -67,8 +67,6 @@ fi
 
 # If Icinga Web 2 module x509 (certificate monitoring) is enabled
 if $ICINGAWEB2_MODULE_X509; then
-    # Clone the module to icingaweb2 modules path
-    git clone https://github.com/Icinga/icingaweb2-module-x509.git /usr/local/share/icingaweb2/modules/x509
     
     # Import the x509 initial schema
     mysql -h$ICINGAWEB2_MYSQL_HOST \
