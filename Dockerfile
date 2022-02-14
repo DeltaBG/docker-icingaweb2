@@ -24,6 +24,10 @@ RUN export DEBIAN_FRONTEND=noninteractive \
         libapache2-mod-php \
         icingacli \
         mysql-client \
+        php7.4 php7.4-cli php7.4-common php7.4-curl php7.4-gd php7.4-gmp php7.4-intl \
+        php7.4-json php7.4-ldap php7.4-mbstring php7.4-mysql php7.4-opcache php7.4-readline \
+        php7.4-soap php7.4-xml \
+        icinga-php-common icinga-php-library icinga-php-thirdparty \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
     # Copy original configs in /etc/icingaweb2.dist/
