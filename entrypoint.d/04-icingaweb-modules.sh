@@ -84,4 +84,8 @@ password = "$ICINGAWEB2_MODULE_X509_MYSQL_PASSWORD"
 charset = "utf8"
 use_ssl = "0"
 EOF
+
+    # Run initial CA certificates import
+    icingacli x509 import --file /etc/ssl/certs/ca-certificates.crt
+
 fi
