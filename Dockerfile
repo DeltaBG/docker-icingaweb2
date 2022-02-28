@@ -52,7 +52,7 @@ RUN mkdir -p /usr/local/share/icingaweb2/modules \
     | tar xz --strip-components=1 --directory=/usr/local/share/icingaweb2/modules/graphite -f - \
     # Icinga Web 2 module Incubator
     && mkdir -p /usr/local/share/icingaweb2/modules/incubator \
-    && wget -q --no-cookies -O - "https://github.com/Icinga/icingaweb2-module-incubator/archive/v0.6.0.tar.gz" \
+    && wget -q --no-cookies -O - "https://github.com/Icinga/icingaweb2-module-incubator/archive/v0.12.0.tar.gz" \
     | tar xz --strip-components=1 --directory=/usr/local/share/icingaweb2/modules/incubator -f - \
     && git clone https://github.com/Icinga/icingaweb2-module-x509.git /usr/local/share/icingaweb2/modules/x509 \
     && true
