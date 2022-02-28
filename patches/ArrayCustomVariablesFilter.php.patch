@@ -1,0 +1,10 @@
+--- library/Director/Data/PropertiesFilter/ArrayCustomVariablesFilter.php	2022-01-20 16:13:09.939593498 +0200
++++ library/Director/Data/PropertiesFilter/ArrayCustomVariablesFilter.php	2022-01-20 16:11:17.072262334 +0200
+@@ -11,6 +11,7 @@
+         && isset($object->datatype)
+         && (
+             preg_match('/DataTypeArray[\w]*$/', $object->datatype)
++            || preg_match('/DataTypeDirectorObject$/', $object->datatype)
+             || (
+                 preg_match('/DataTypeDatalist$/', $object->datatype)
+                 && $object->format === 'json'

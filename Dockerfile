@@ -33,12 +33,19 @@ RUN export DEBIAN_FRONTEND=noninteractive \
     # Copy original configs in /etc/icingaweb2.dist/
     && cp -a /etc/icingaweb2 /etc/icingaweb2.dist
 
+# Copy patches directory
+ADD patches/ /patches/
+
 # Install additional Icingaweb2 modules
 RUN mkdir -p /usr/local/share/icingaweb2/modules \
     # Icinga Web 2 module Director
     && mkdir -p /usr/local/share/icingaweb2/modules/director \
-    && wget -q --no-cookies -O - "https://github.com/Icinga/icingaweb2-module-director/archive/v1.8.1.tar.gz" \
+    && wget -q --no-cookies -O - "https://github.com/Icinga/icingaweb2-module-director/archive/v1.9.0.tar.gz" \
     | tar xz --strip-components=1 --directory=/usr/local/share/icingaweb2/modules/director --exclude=.gitignore -f - \
+    && patch /usr/local/share/icingaweb2/modules/director/library/Director/IcingaConfig/IcingaConfigHelper.php \
+    /patches/IcingaConfigHelper.php.patch \
+    && patch /usr/local/share/icingaweb2/modules/director/library/Director/Data/PropertiesFilter/ArrayCustomVariablesFilter.php \
+    /patches/ArrayCustomVariablesFilter.php.patch \
     # Icinga Web 2 module Graphite
     && mkdir -p /usr/local/share/icingaweb2/modules/graphite \
     && wget -q --no-cookies -O - "https://github.com/Icinga/icingaweb2-module-graphite/archive/v1.1.0.tar.gz" \
