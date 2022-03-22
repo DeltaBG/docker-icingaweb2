@@ -2,6 +2,17 @@
 # Entrypoint for deltabg/icingaweb2
 # Icinga Web 2 Module x509
 
+# Export environment constants
+export _ICINGAWEB2_MODULE_X509_INSTALLED_FILE=/etc/icingaweb2/installed_x509
+
+# Default is not installed
+export _ICINGAWEB2_MODULE_X509_INSTALLED=false
+
+# Check Icinga Web 2 Module x509 is installed.
+if [ -f "$_ICINGAWEB2_MODULE_X509_INSTALLED_FILE" ]; then
+    export _ICINGAWEB2_MODULE_X509_INSTALLED=true
+fi
+
 # If Icinga Web 2 module x509 (certificate monitoring) is enabled
 if $ICINGAWEB2_MODULE_X509; then
 
@@ -14,8 +25,8 @@ if $ICINGAWEB2_MODULE_X509; then
            CREATE USER IF NOT EXISTS '$ICINGAWEB2_MODULE_X509_MYSQL_USER'@'%' IDENTIFIED BY '$ICINGAWEB2_MODULE_X509_MYSQL_PASSWORD';
            GRANT SELECT, INSERT, UPDATE, DELETE, DROP, CREATE VIEW, INDEX, EXECUTE ON $ICINGAWEB2_MODULE_X509_MYSQL_DB.* TO '$ICINGAWEB2_MODULE_X509_MYSQL_USER'@'%';"
     
-    # If Icinga Web 2 is not installed
-    if ! $_ICINGAWEB2_INSTALLED; then
+    # If Icinga Web 2 Module x509 is not installed
+    if ! $_ICINGAWEB2_MODULE_X509_INSTALLED; then
 
         # Import the x509 initial schema
         mysql -h$ICINGAWEB2_MYSQL_HOST \
@@ -47,6 +58,9 @@ EOF
 
     # Run initial CA certificates import
     icingacli x509 import --file /etc/ssl/certs/ca-certificates.crt
+
+    # Touch installed file.
+    touch $_ICINGAWEB2_MODULE_X509_INSTALLED_FILE
 
 else
 

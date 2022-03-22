@@ -2,6 +2,17 @@
 # Entrypoint for deltabg/icingaweb2
 # Icinga Web 2 Module Director
 
+# Export environment constants
+export _ICINGAWEB2_MODULE_DIRECTOR_INSTALLED_FILE=/etc/icingaweb2/installed_director
+
+# Default is not installed
+export _ICINGAWEB2_MODULE_DIRECTOR_INSTALLED=false
+
+# Check Icinga Web 2 Module Director is installed.
+if [ -f "$_ICINGAWEB2_MODULE_DIRECTOR_INSTALLED_FILE" ]; then
+    export _ICINGAWEB2_MODULE_DIRECTOR_INSTALLED=true
+fi
+
 # If Icinga Web 2 module Director is enable
 if $ICINGAWEB2_MODULE_DIRECTOR; then
 
@@ -16,8 +27,8 @@ if $ICINGAWEB2_MODULE_DIRECTOR; then
            GRANT ALL ON $ICINGAWEB2_MODULE_DIRECTOR_MYSQL_DB . * TO '$ICINGAWEB2_MODULE_DIRECTOR_MYSQL_USER'@'%';"
 
 
-    # If Icinga Web 2 is not installed
-    if ! $_ICINGAWEB2_INSTALLED; then
+    # If Icinga Web 2 Module Director is not installed
+    if ! $_ICINGAWEB2_MODULE_DIRECTOR_INSTALLED; then
 
         # Import the Icinga Web 2 module Director MySQL schema.
         echo "Entrypoint: Import the Icinga Web 2 module Director MySQL schema."
@@ -72,6 +83,9 @@ EOF
         icingacli director kickstart run
 
     fi
+
+    # Touch installed file.
+    touch $_ICINGAWEB2_MODULE_DIRECTOR_INSTALLED_FILE
 
 else
 
