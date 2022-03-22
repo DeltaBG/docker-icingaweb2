@@ -55,6 +55,9 @@ RUN mkdir -p /usr/local/share/icingaweb2/modules \
     && wget -q --no-cookies -O - "https://github.com/Icinga/icingaweb2-module-incubator/archive/v0.12.0.tar.gz" \
     | tar xz --strip-components=1 --directory=/usr/local/share/icingaweb2/modules/incubator -f - \
     && git clone https://github.com/Icinga/icingaweb2-module-x509.git /usr/local/share/icingaweb2/modules/x509 \
+    && mkdir /usr/local/share/icingaweb2/modules/grafana \
+    && wget -q --no-cookies -O - "https://github.com/Mikesch-mp/icingaweb2-module-grafana/archive/refs/tags/v1.4.2.tar.gz" \
+    | tar xz --strip-components=1 --directory=/usr/local/share/icingaweb2/modules/grafana -f - \
     && true
 
 ADD content/ /
