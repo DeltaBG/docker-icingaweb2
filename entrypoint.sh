@@ -54,11 +54,12 @@ export ICINGAWEB2_MODULE_X509_MYSQL_PASSWORD=${ICINGAWEB2_MODULE_X509_MYSQL_PASS
 export _ICINGAWEB2_ADMIN_PASSWORD_HASH=$(openssl passwd -1 "${ICINGAWEB2_ADMIN_PASSWORD}")
 export _ICINGAWEB2_INSTALLED_FILE=/etc/icingaweb2/installed
 
-# Check Icingaweb2 is not yet installed.
-if [ ! -f "$_ICINGAWEB2_INSTALLED_FILE" ]; then
+# Default is not installed
+export _ICINGAWEB2_INSTALLED=false
 
+# Check Icinga Web 2 is installed.
+if [ -f "$_ICINGAWEB2_INSTALLED_FILE" ]; then
     export _ICINGAWEB2_INSTALLED=true
-
 fi
 
 # Run Initial script
