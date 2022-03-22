@@ -206,6 +206,10 @@ docker run -d \
 
 The x509 (certificate module) can be installed by setting the environment variable `ICINGAWEB2_MODULE_X509` to `true`. It is advisable to configure the `ICINGAWEB2_MODULE_X509_MYSQL_PASSWORD` variable as well. 
 
+### Grafana module
+
+Add Grafana graphs into Icinga Web 2 to display performance metrics. For more information visit the official [module documentation](https://github.com/Mikesch-mp/icingaweb2-module-grafana).
+
 ## Reference
 
 ### Environment variables
@@ -251,6 +255,11 @@ Variables marked in **bold** are recommended to be adjusted according to your ne
 | `ICINGAWEB2_MODULE_X509_MYSQL_DB`               | x509                 | MySQL database name for x509 module                    |
 | `ICINGAWEB2_MODULE_X509_MYSQL_USER`             | x509                 | MySQL database user name for x509 module               |
 | `ICINGAWEB2_MODULE_X509_MYSQL_PASSWORD`         | s3cr3tpass           | MySQL database password for x509 module                |
+| `ICINGAWEB2_MODULE_GRAFANA`                     | false                | Enable or disable Grafana module.                      |
+| `ICINGAWEB2_MODULE_GRAFANA_HOST`                | icinga-grafana       | Grafana hostname or IP address.                        |
+| `ICINGAWEB2_MODULE_GRAFANA_PORT`                | 3000                 | Grafana port.                                          |
+| `ICINGAWEB2_MODULE_GRAFANA_PROTOCOL`            | http                 | Grafana protocol. Valid values: http, https            |
+| `ICINGAWEB2_MODULE_GRAFANA_TIMERANGE`           | '1w/w'               | Grafana timerange.                                     |
 
 ### Volumes
 
