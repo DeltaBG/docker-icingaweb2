@@ -52,7 +52,7 @@ services:
       icinga_graphite:
         condition: service_started
   icinga_icingaweb2:
-    image: deltabg/icingaweb2:2.1.0
+    image: deltabg/icingaweb2
     container_name: icinga_icingaweb2
     restart: unless-stopped
     networks:
