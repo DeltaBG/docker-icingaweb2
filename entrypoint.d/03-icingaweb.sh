@@ -41,14 +41,19 @@ username = "$ICINGA2_API_USER"
 password = "$ICINGA2_API_PASSWORD"
 EOF
 
-# Setting up Icinga Web 2 roles.
-echo "Entrypoint: Setting up Icinga Web 2 roles."
-cat <<EOF > /etc/icingaweb2/roles.ini
+# If Icinga Web 2 is not installed
+if ! $_ICINGAWEB2_INSTALLED; then
+
+    # Setting up Icinga Web 2 roles.
+    echo "Entrypoint: Setting up Icinga Web 2 roles."
+    cat <<EOF > /etc/icingaweb2/roles.ini
 [Administrators]
 users = "$ICINGAWEB2_ADMIN_USER"
 permissions = "*"
 groups = "Administrators"
 EOF
+
+fi
 
 # Enable Icinga Web 2 module doc.
 echo "Entrypoint: Enable Icinga Web 2 module doc."
