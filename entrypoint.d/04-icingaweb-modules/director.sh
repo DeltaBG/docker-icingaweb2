@@ -1,24 +1,33 @@
 #!/bin/bash
 # Entrypoint for deltabg/icingaweb2
-# Icinga Web 2 Modules
-
-# If Icinga Web 2 module Graphite is enable
-if $ICINGAWEB2_MODULE_GRAPHITE; then
-
-    # Enable and setting up Icinga Web 2 module Graphite.
-    echo "Entrypoint: Enable and setting up Icinga Web 2 module Graphite."
-    icingacli module enable graphite
-    cp -a /usr/local/share/icingaweb2/modules/graphite/templates/* /etc/icingaweb2/modules/graphite
-    cat <<EOF > /etc/icingaweb2/modules/graphite/config.ini
-[graphite]
-url = "http://$ICINGAWEB2_MODULE_GRAPHITE_HOST/"
-insecure = "0"
-EOF
-
-fi
+# Icinga Web 2 Module Director
 
 # If Icinga Web 2 module Director is enable
 if $ICINGAWEB2_MODULE_DIRECTOR; then
+
+    # Create Icinga Web 2 module Director MySQL Database and User.
+    echo "Entrypoint: Create Icinga Web 2 module Director MySQL Database and User."
+    mysql -h$ICINGAWEB2_MODULE_DIRECTOR_MYSQL_HOST \
+        -P$ICINGAWEB2_MODULE_DIRECTOR_MYSQL_PORT \
+        -u$MYSQL_ROOT_USER \
+        -p$MYSQL_ROOT_PASSWORD \
+        -e"CREATE DATABASE IF NOT EXISTS $ICINGAWEB2_MODULE_DIRECTOR_MYSQL_DB;
+           CREATE USER IF NOT EXISTS '$ICINGAWEB2_MODULE_DIRECTOR_MYSQL_USER'@'%' IDENTIFIED BY '$ICINGAWEB2_MODULE_DIRECTOR_MYSQL_PASSWORD';
+           GRANT ALL ON $ICINGAWEB2_MODULE_DIRECTOR_MYSQL_DB . * TO '$ICINGAWEB2_MODULE_DIRECTOR_MYSQL_USER'@'%';"
+
+
+    # If Icinga Web 2 is not installed
+    if ! $_ICINGAWEB2_INSTALLED; then
+
+        # Import the Icinga Web 2 module Director MySQL schema.
+        echo "Entrypoint: Import the Icinga Web 2 module Director MySQL schema."
+        mysql -h$ICINGAWEB2_MODULE_DIRECTOR_MYSQL_HOST \
+            -P$ICINGAWEB2_MODULE_DIRECTOR_MYSQL_PORT \
+            -u$ICINGAWEB2_MODULE_DIRECTOR_MYSQL_USER \
+            -p$ICINGAWEB2_MODULE_DIRECTOR_MYSQL_PASSWORD \
+            $ICINGAWEB2_MODULE_DIRECTOR_MYSQL_DB < /usr/local/share/icingaweb2/modules/director/schema/mysql.sql
+
+    fi
 
     # Enable and setting up Icinga Web 2 module Incubator.
     echo "Entrypoint: Enable and setting up Icinga Web 2 module Incubator."
@@ -41,6 +50,7 @@ username = "$ICINGAWEB2_MODULE_DIRECTOR_MYSQL_USER"
 password = "$ICINGAWEB2_MODULE_DIRECTOR_MYSQL_PASSWORD"
 charset = "utf8"
 use_ssl = "0"
+
 EOF
 
     # If Icinga Web 2 module Director Kickstart is enable
@@ -63,29 +73,10 @@ EOF
 
     fi
 
-fi
+else
 
-# If Icinga Web 2 module x509 (certificate monitoring) is enabled
-if $ICINGAWEB2_MODULE_X509; then
-
-    # Enable the x509 module
-    icingacli module enable x509
-
-    # Setup x509 resources.ini
-    cat <<EOF >> /etc/icingaweb2/resources.ini
-[x509_db]
-type = "db"
-db = "mysql"
-host = "$ICINGAWEB2_MYSQL_HOST"
-port = "$ICINGAWEB2_MYSQL_PORT"
-dbname = "$ICINGAWEB2_MODULE_X509_MYSQL_DB"
-username = "$ICINGAWEB2_MODULE_X509_MYSQL_USER"
-password = "$ICINGAWEB2_MODULE_X509_MYSQL_PASSWORD"
-charset = "utf8"
-use_ssl = "0"
-EOF
-
-    # Run initial CA certificates import
-    icingacli x509 import --file /etc/ssl/certs/ca-certificates.crt
+    # Disable Icinga Web 2 module Director.
+    echo "Entrypoint: Disable Icinga Web 2 module Director."
+    icingacli module disable director
 
 fi

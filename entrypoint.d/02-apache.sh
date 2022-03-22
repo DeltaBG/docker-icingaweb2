@@ -7,7 +7,7 @@ echo "Entrypoint: Create SSL directory /etc/apache2/ssl."
 mkdir -p /etc/apache2/ssl
 chown -R root:root /etc/apache2/ssl
 
-# If Icingaweb2 module Graphite is enable
+# If Icingaweb2 SSL is enable
 if $ICINGAWEB2_SSL; then
 
     # Enable and setting up Apache HTTPS.

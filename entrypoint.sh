@@ -57,28 +57,29 @@ export _ICINGAWEB2_INSTALLED_FILE=/etc/icingaweb2/installed
 # Check Icingaweb2 is not yet installed.
 if [ ! -f "$_ICINGAWEB2_INSTALLED_FILE" ]; then
 
-    # If so, we perform the initial setup.
-    echo "Entrypoint: Start Icingaweb2 initial setup!"
-
-    # Run Initial script
-    /entrypoint.d/00-initial.sh
-
-    # Run Database script
-    /entrypoint.d/01-database.sh
-
-    # Run Apache script
-    /entrypoint.d/02-apache.sh
-
-    # Run Icinga Web 2 script
-    /entrypoint.d/03-icingaweb.sh
-
-    # Run Icinga Web 2 Modules script
-    /entrypoint.d/04-icingaweb-modules.sh
-
-    # Run Final script
-    /entrypoint.d/10-final.sh
+    export _ICINGAWEB2_INSTALLED=true
 
 fi
+
+# Run Initial script
+/entrypoint.d/00-initial.sh
+
+# Run Database script
+/entrypoint.d/01-database.sh
+
+# Run Apache script
+/entrypoint.d/02-apache.sh
+
+# Run Icinga Web 2 script
+/entrypoint.d/03-icingaweb.sh
+
+# Run Icinga Web 2 Modules scripts
+/entrypoint.d/04-icingaweb-modules/director.sh
+/entrypoint.d/04-icingaweb-modules/graphite.sh
+/entrypoint.d/04-icingaweb-modules/x509.sh
+
+# Run Final script
+/entrypoint.d/10-final.sh
 
 # If Icinga Web 2 module Director is enable
 if $ICINGAWEB2_MODULE_DIRECTOR; then
